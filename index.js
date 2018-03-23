@@ -21,7 +21,6 @@ const port = process.env.PORT || 1234
 
 /**生成app实例**/
 const app = new Koa()
-app.context.connection = connection
 app.context.wechat = new WeChat()
 
 app
