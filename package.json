@@ -4,9 +4,17 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "exceljs": "^1.0.0",
     "koa": "^2.5.0",
+    "koa-better-serve": "^2.0.7",
+    "koa-body": "^2.5.0",
+    "koa-favicon": "^2.0.1",
+    "koa-router": "^7.4.0",
+    "koa-session": "^5.8.1",
+    "moment": "^2.21.0",
     "request": "^2.85.0",
-    "sha1": "^1.1.1"
+    "sha1": "^1.1.1",
+    "xml2js": "^0.4.19"
   },
   "devDependencies": {},
   "scripts": {

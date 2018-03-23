@@ -3,33 +3,34 @@
 const path = require('path');
 const Koa=require('koa')
 const util = require('./libs/util')
+const serve = require('koa-better-serve')
+const session = require('koa-session')
+const favicon = require('koa-favicon')
 
-const wechat = require('./wechat/g')
+/**引用router**/
+const router = require('./server/router')
+const WeChat = require('./server/wechat')
 
-const wechat_file = path.join(__dirname,'./config/wechat.txt')
-
-const config={
-  wechat:{
-    appID:'wx17553b6801759908',
-    appSecret:'f122296e37abf10ba55a8746a90fdd15',
-    token:'zhaoxuetong',
-    getAccessToken:function(){
-      return util.readFileAsync(wechat_file)
-    },
-    saveAccessToken:function(data){
-      let _data = JSON.stringify(data)
-      console.log('########_data########')
-      console.log(_data)
-      console.log('########_data########')
-      return util.writeFileAsync(wechat_file,_data)
-    }
-  }
-}
+/**引用config**/
+const mysqlConfig = require('./server/config/mysql')
+const sessionConfig = require('./server/config/session')
 
 
-const app=new Koa()
+/**定义常量**/
+const port = process.env.PORT || 1234
 
-app.use(wechat(config.wechat))
+/**生成app实例**/
+const app = new Koa()
+app.context.connection = connection
+app.context.wechat = new WeChat()
 
-app.listen(1234)
-console.log('Listening:1234')
+app
+  .use(session(sessionConfig, app))
+  .use(favicon(__dirname + '/favicon.ico'))
+  .use(router.routes())
+  .use(router.allowedMethods())
+  .use(serve(path.join(__dirname, './src'), '/src'))
+
+app.listen(port, () => {
+  console.log(`listen on ${port}`)
+});

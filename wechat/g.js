@@ -4,11 +4,6 @@ const __request = require('request');
 const request = function(obj){
   return new Promise(function(resolve,reject){
     __request(obj,function(err,response,body){
-      console.log('#####request in Promise#####')
-      console.log(err)
-      console.log(response)
-      console.log(body)
-      console.log('#####request in Promise#####')
       if(err){reject(err)}
       resolve(body)
     })
@@ -86,8 +81,6 @@ module.exports = function (opts) {
   let wechat = new Wechat(opts)
 
   return function* (next) {
-    console.log(this.query)
-
     let token = opts.token
     let signature = this.query.signature
     let nonce = this.query.nonce
