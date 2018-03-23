@@ -2,7 +2,6 @@
 
 const path = require('path');
 const Koa=require('koa')
-const util = require('./libs/util')
 const serve = require('koa-better-serve')
 const session = require('koa-session')
 const favicon = require('koa-favicon')
