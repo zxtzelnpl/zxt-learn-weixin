@@ -23,9 +23,9 @@ const api = {
 function Wechat () {
   this.appID = config.appID
   this.appSecret = config.appSecret
-  this.getAccessToken = config.getAccessToken
-  this.saveAccessToken = config.saveAccessToken
 }
+
+
 
 Wechat.prototype.isValidAccessToken = function (data) {
   if (!data || !data.access_token || !data.expires_in) {
@@ -50,14 +50,19 @@ Wechat.prototype.updateAccessToken = async function () {
   return data
 }
 
-Wechat.prototype.createMenu = async function (menu){
-  /**这边需要做更改**/
-  let accessToken = await this.getAccessToken()
+Wechat.prototype.getAccessToken = async function(){
+  let accessToken = await config.getAccessToken()
   if(!this.isValidAccessToken(accessToken)){
     accessToken = await this.updateAccessToken()
-    await this.saveAccessToken(accessToken)
+    await config.saveAccessToken(accessToken)
   }
-  /**这边需要做更改**/
+  return accessToken.access_token
+}
+
+
+
+Wechat.prototype.createMenu = async function (menu){
+  let accessToken = await this.getAccessToken()
   let url = `${api.menu.create}access_token=${accessToken}`
   let response = await request({method:'POST',body:menu,url:url,json:true})
   console.log(response)
@@ -65,32 +70,15 @@ Wechat.prototype.createMenu = async function (menu){
 }
 
 Wechat.prototype.getMenu = async function (){
-  /**这边需要做更改**/
   let accessToken = await this.getAccessToken()
-
-  console.log('##getMenu##')
-  console.log(accessToken)
-  console.log('##getMenu##')
-
-  if(!this.isValidAccessToken(accessToken)){
-    accessToken = await this.updateAccessToken()
-    await this.saveAccessToken(accessToken)
-  }
-  /**这边需要做更改**/
-  let url = `${api.menu.get}access_token=${accessToken.access_token}`
+  let url = `${api.menu.get}access_token=${accessToken}`
   let response = await request({method:'GET',url:url,json:true})
   console.log(response)
   return response
 }
 
 Wechat.prototype.deleteMenu = async function (){
-  /**这边需要做更改**/
   let accessToken = await this.getAccessToken()
-  if(!this.isValidAccessToken(accessToken)){
-    accessToken = await this.updateAccessToken()
-    await this.saveAccessToken(accessToken)
-  }
-  /**这边需要做更改**/
   let url = `${api.menu.delete}access_token=${accessToken}`
   let response = await request({method:'GET',url:url,json:true})
   console.log(response)

@@ -13,6 +13,8 @@ module.exports = async (ctx,next) =>{
 
   let sha = sha1(str)
 
+  console.log('check')
+
   if (sha !== signature) {
     ctx.body = 'wrong'
   }
