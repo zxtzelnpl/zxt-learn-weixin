@@ -11,7 +11,6 @@ const router = require('./server/router')
 const WeChat = require('./server/wechat')
 
 /**引用config**/
-const mysqlConfig = require('./server/config/mysql')
 const sessionConfig = require('./server/config/session')
 
 
