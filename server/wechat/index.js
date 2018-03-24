@@ -59,8 +59,6 @@ Wechat.prototype.getAccessToken = async function(){
   return accessToken.access_token
 }
 
-
-
 Wechat.prototype.createMenu = async function (menu){
   let accessToken = await this.getAccessToken()
   let url = `${api.menu.create}access_token=${accessToken}`
