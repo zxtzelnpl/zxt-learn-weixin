@@ -47,6 +47,7 @@ router.get('/us', async (ctx) => {
 })
 
 router.get('/weixin', check)
+
 router.post('/weixin',check, xmlParser({
   xmlOptions: {
     explicitRoot: false,
